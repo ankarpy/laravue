@@ -14,9 +14,25 @@ class QuestionsController extends Controller
      */
     public function index()
     {
-        $questions = Question::latest()->paginate(5);
+        /**
+         * Debugging example
+         */
 
+        /*
+        \DB::enableQueryLog();
+        $questions = Question::with('user')->latest()->paginate(5);
+        //$questions = Question::latest()->paginate(5); // Nem optimalizált. A Question::with('user') egyesíti az user lekéréseket míg enélkül minden Question-höz egyesével kérdezzük le az usert
+
+        view('questions.index', compact("questions"))->render(); // Azért kell a render, hogy lefusson az oldal, és a queryk amik rajta lefutottak visszajöjjenek
+
+        dd(\DB::getQueryLog());
+        */
+
+
+        $questions = Question::with('user')->latest()->paginate(5);
         return view('questions.index', compact("questions"));
+
+
     }
 
     /**
