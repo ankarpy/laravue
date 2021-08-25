@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Question;
 use Illuminate\Http\Request;
+use App\Http\Requests\AskQuestionRequest;
 
 class QuestionsController extends Controller
 {
@@ -49,9 +50,22 @@ class QuestionsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(AskQuestionRequest $request)
     {
-        //
+        try {
+            $request->user()->questions()->create($request->only('title', 'body'));
+        } catch(\Illuminate\Database\QueryException $e)
+        {
+            return redirect()->back()
+                ->with('error', $e->getMessage());
+        } catch ( \Exception $e ) {
+            return redirect()->back()
+                ->with('error', $e->getMessage());
+        }
+
+
+        return redirect()->route('questions.index')
+            ->with('success', 'Your question has been published.');
     }
 
     /**
