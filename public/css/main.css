@@ -1,0 +1,38 @@
+.question {
+  padding: 1rem;
+  border-bottom: 1px solid lightgrey;
+}
+
+.counters {
+  margin-right: 30px;
+  font-size: 0.6rem;
+  text-align: center;
+}
+.counters strong {
+  padding-top: 0.1rem;
+  display: block;
+  font-size: 1.6rem;
+  line-height: 1.6rem;
+}
+.counters .vote, .counters .status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+}
+.counters .status {
+  margin: 0 0 0.5rem 0;
+}
+.counters .status.unanswered {
+  border: none;
+}
+.counters .status.answered {
+  border: 1px solid #5fbb7e;
+  color: #5fbb7e;
+}
+.counters .status.answered-accepted {
+  background: #5fbb7e;
+  color: #fff;
+}

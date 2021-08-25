@@ -1,0 +1,54 @@
+// Variables
+@import 'variables';
+
+html {
+    //font-size: 25px;
+
+}
+
+.question {
+    padding: 1rem;
+    border-bottom: 1px solid lightgrey;
+}
+
+.counters {
+    margin-right: 30px;
+    font-size: 0.6rem;
+    text-align: center;
+
+    strong {
+        padding-top: 0.1rem;
+        display: block;
+        font-size: 1.6rem;
+        line-height: 1.6rem;
+
+    }
+
+    .vote, .status {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+    .status {
+        margin: 0 0 0.5rem 0;
+    }
+
+    .status {
+        &.unanswered {
+            border: none;
+        }
+        &.answered {
+            border: 1px solid $color-green;
+            color: $color-green;
+        }
+        &.answered-accepted {
+            background: $color-green;
+            color: $color-white;
+        }
+    }
+}
