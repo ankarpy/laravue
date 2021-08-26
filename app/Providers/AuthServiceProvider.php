@@ -25,6 +25,10 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        // Gates are used in complex actions, whereas policies are used for authorizing CRUD actions
+        // But to demonstrate, here's a gate
+        /*\Gate::define('update-question', function($user, $question){
+            return $user->id === $question->user_id;
+        });*/
     }
 }

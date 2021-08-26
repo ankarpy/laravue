@@ -24,9 +24,14 @@ class AskQuestionRequest extends FormRequest
      */
     public function rules()
     {
+
         return [
-            'title' => ['required', 'max:255', Rule::unique('questions')->ignore($this)], //Meh
+            'title' => 'required|max:255|unique:questions' . ($this->question ? (',title,' . $this->question->title . ',title') : ''),
             'body' => 'required'
         ];
+
+
+
+
     }
 }

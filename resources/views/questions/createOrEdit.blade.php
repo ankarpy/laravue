@@ -16,9 +16,16 @@
                     </div>
 
                     <div class="card-body">
+                        @if(!isset($question->id))
                         <form action="{{ route('questions.store') }}" method="post">
-                            @include ("questions._form", ['buttonText' => "Ask Question"])
+                            @include ("questions._form", [])
                         </form>
+                        @else
+                        <form action="{{ route('questions.update', $question->id) }}" method="post">
+                            {{ method_field('PUT') }}
+                            @include ("questions._form", [])
+                        </form>
+                        @endif
                     </div>
                 </div>
             </div>

@@ -43,14 +43,14 @@ class QuestionsController extends Controller
     {
         $question = new Question();
 
-        return view('questions.create', compact('question'));
+        return view('questions.createOrEdit', compact('question'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response | \Illuminate\Http\RedirectResponse
      */
     public function store(AskQuestionRequest $request)
     {
@@ -78,7 +78,9 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-        //
+        $question->increment('views');
+
+        return view('questions.show', compact('question'));
     }
 
     /**
@@ -89,13 +91,21 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
-        return view("questions.edit", compact('question'));
+
+        // Gates are used in complex actions, whereas policies are used for authorizing CRUD actions
+        // But to demonstrate, here's a gate
+        // Defined in \AuthServiceProvider.php
+        /*if (\Gate::denies('update-question', $question)){
+            abort(403, "Access denied")
+        }*/
+
+        return view("questions.createOrEdit", compact('question'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\AskQuestionRequest  $request
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
