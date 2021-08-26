@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Policies\QuestionPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+
+use App\Models\Question;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+         Question::class => QuestionPolicy::class,
     ];
 
     /**
@@ -26,9 +29,8 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         // Gates are used in complex actions, whereas policies are used for authorizing CRUD actions
-        // But to demonstrate, here's a gate
-        /*\Gate::define('update-question', function($user, $question){
-            return $user->id === $question->user_id;
-        });*/
+        \Gate::define('access-daily-message', function($user){
+            return isset($user);
+        });
     }
 }

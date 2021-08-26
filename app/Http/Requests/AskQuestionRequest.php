@@ -14,6 +14,8 @@ class AskQuestionRequest extends FormRequest
      */
     public function authorize()
     {
+        // NOTE : You can place gates only here. This is not a wise place to perform any authorization.
+        // Instead
         return true;
     }
 

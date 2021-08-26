@@ -8,6 +8,10 @@ use App\Http\Requests\AskQuestionRequest;
 
 class QuestionsController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +19,7 @@ class QuestionsController extends Controller
      */
     public function index()
     {
+
         /**
          * Debugging example
          */
@@ -30,6 +35,13 @@ class QuestionsController extends Controller
         */
 
 
+        // Gates are used in complex actions, whereas policies are used for authorizing CRUD actions
+        // Defined in \AuthServiceProvider.php
+        if (\Gate::denies('access-daily-message')){
+            // User can't access the daily message
+        }
+
+
         $questions = Question::with('user')->latest()->paginate(5);
         return view('questions.index', compact("questions"));
     }
@@ -41,6 +53,8 @@ class QuestionsController extends Controller
      */
     public function create()
     {
+        $this->authorize("create", Question::class);
+
         $question = new Question();
 
         return view('questions.createOrEdit', compact('question'));
@@ -54,6 +68,9 @@ class QuestionsController extends Controller
      */
     public function store(AskQuestionRequest $request)
     {
+
+        $this->authorize("create", Question::class);
+
         try {
             $request->user()->questions()->create($request->only('title', 'body'));
         } catch(\Illuminate\Database\QueryException $e)
@@ -78,6 +95,7 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
+
         $question->increment('views');
 
         return view('questions.show', compact('question'));
@@ -92,12 +110,7 @@ class QuestionsController extends Controller
     public function edit(Question $question)
     {
 
-        // Gates are used in complex actions, whereas policies are used for authorizing CRUD actions
-        // But to demonstrate, here's a gate
-        // Defined in \AuthServiceProvider.php
-        /*if (\Gate::denies('update-question', $question)){
-            abort(403, "Access denied")
-        }*/
+        $this->authorize("update", $question);
 
         return view("questions.createOrEdit", compact('question'));
     }
@@ -111,6 +124,8 @@ class QuestionsController extends Controller
      */
     public function update(AskQuestionRequest $request, Question $question)
     {
+        $this->authorize("update", $question);
+
         $question->update($request->only('title', 'body'));
 
         return redirect('/questions')->with('success', "Your question has been updated.");
@@ -124,6 +139,8 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
+        $this->authorize("delete", $question);
+
         $question->delete();
 
         return redirect('/questions')->with('success', "Your question has been deleted.");

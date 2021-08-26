@@ -4,6 +4,16 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            @can('access-daily-message')
+            <div class="card mb-4">
+                <div class="card-header">
+                    Daily message
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Have a nice day today!</li>
+                </ul>
+            </div>
+            @endcan
             <div class="card">
                 <div class="card-header">
 
@@ -37,12 +47,16 @@
                             <div class="d-flex align-items-center">
                                 <h3 class="mt-0 mb-0"><a href="{{ $question->url }}">{{ $question->title }}</a></h3>
                                 <div class="ml-auto">
+                                    @can('update', $question)
                                     <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-sm btn-outline-info">{{__('Edit')}}</a>
+                                    @endcan
+                                    @can('delete', $question)
                                     <form class="form-delete d-inline" method="post" action="{{ route('questions.destroy', $question->id) }}">
                                         @method('DELETE')
                                         @csrf
                                         <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
                                     </form>
+                                    @endcan
                                 </div>
                             </div>
 
