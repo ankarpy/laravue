@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AskQuestionRequest extends FormRequest
 {
@@ -24,7 +25,7 @@ class AskQuestionRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|max:255|unique:questions',
+            'title' => ['required', 'max:255', Rule::unique('questions')->ignore($this)], //Meh
             'body' => 'required'
         ];
     }

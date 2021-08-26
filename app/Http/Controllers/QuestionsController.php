@@ -41,7 +41,9 @@ class QuestionsController extends Controller
      */
     public function create()
     {
-        return view('questions.create');
+        $question = new Question();
+
+        return view('questions.create', compact('question'));
     }
 
     /**
@@ -87,7 +89,7 @@ class QuestionsController extends Controller
      */
     public function edit(Question $question)
     {
-        //
+        return view("questions.edit", compact('question'));
     }
 
     /**
@@ -97,9 +99,11 @@ class QuestionsController extends Controller
      * @param  \App\Models\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Question $question)
+    public function update(AskQuestionRequest $request, Question $question)
     {
-        //
+        $question->update($request->only('title', 'body'));
+
+        return redirect('/questions')->with('success', "Your question has been updated.");
     }
 
     /**
@@ -110,6 +114,8 @@ class QuestionsController extends Controller
      */
     public function destroy(Question $question)
     {
-        //
+        $question->delete();
+
+        return redirect('/questions')->with('success', "Your question has been deleted.");
     }
 }
