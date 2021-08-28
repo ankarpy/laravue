@@ -29,7 +29,7 @@ class Question extends Model
     }
 
     public function getStatusAttribute() {
-        if ($this->answers > 0) {
+        if ($this->answer_count > 0) {
             if ($this->accepted_answer_id){
                 return "answered-accepted";
             }
@@ -42,5 +42,9 @@ class Question extends Model
     public function getBodyHtmlAttribute()
     {
         return parsedown($this->body);
+    }
+
+    public function answers(){
+        return $this->hasMany(Answer::class);
     }
 }

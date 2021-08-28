@@ -16,8 +16,13 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory(10)->create()->each(function($u) {
           $u->questions()
           ->saveMany(
-              \App\Models\Question::factory(rand(1,5))->make() //make, not create%%
-            );
+              \App\Models\Question::factory(rand(1,5))->make() // MAKE generates data, and we save it manually with saveMany() // Else with CREATE it would create it..
+            )
+          ->each(function($q) {
+              $q->answers()->saveMany(
+                  \App\Models\Answer::factory(rand(1,5))->make()
+              );
+          });
         });
 
     }
