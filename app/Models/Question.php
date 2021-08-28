@@ -11,6 +11,8 @@ class Question extends Model
 
     protected $fillable = ['title', 'body'];
 
+    protected $with = ['user'];
+
     public function user() {
       return $this->belongsTo(User::class);
     }

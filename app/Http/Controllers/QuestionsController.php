@@ -37,12 +37,12 @@ class QuestionsController extends Controller
 
         // Gates are used in complex actions, whereas policies are used for authorizing CRUD actions
         // Defined in \AuthServiceProvider.php
-        if (\Gate::denies('access-daily-message')){
+        /*if (\Gate::denies('access-daily-message')){
             // User can't access the daily message
-        }
+        }*/
 
 
-        $questions = Question::with('user')->latest()->paginate(5);
+        $questions = Question::latest()->paginate(5);
         return view('questions.index', compact("questions"));
     }
 
