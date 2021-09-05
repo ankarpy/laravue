@@ -22,5 +22,7 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::resource('questions', App\Http\Controllers\QuestionsController::class)->except('show');
+//Route::post('/questions/{question}/answers', [App\Http\Controllers\AnswersController::class, 'store'])->name('answers.store');
+Route::resource('questions.answers', App\Http\Controllers\AnswersController::class)->only(['store', 'edit', 'update', 'destroy']);
 Route::get('/questions/{slug}', [App\Http\Controllers\QuestionsController::class, 'show'])->name('questions.show');
 
