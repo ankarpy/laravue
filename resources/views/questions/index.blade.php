@@ -30,7 +30,7 @@
                 <div class="card-body">
                     @include('layouts/_messages')
 
-                    @foreach($questions as $question)
+                    @forelse($questions as $question)
                     <div class="media question">
                         <div class="d-flex flex-column counters">
                             <div class="vote">
@@ -67,11 +67,15 @@
                                     {{ $question->created_date }}
                                 </small>
                             </p>
-                            {{ \Str::limit($question->body, 250) }}
+                            <div class="excerpt">{{ $question->excerpt(350) }}</div>
                         </div>
 
                     </div>
-                    @endforeach
+                    @empty
+                        <div class="alert alert-warning">
+                            <strong>Sorry</strong> There are no questions available.
+                        </div>
+                    @endforelse
 
                     <div class="text-center mt-5">
                         {{ $questions->links() }}
