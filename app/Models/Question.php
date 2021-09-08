@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\VotableTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Question extends Model
 {
-    use HasFactory;
+    use HasFactory, VotableTrait;
 
     protected $fillable = ['title', 'body'];
 
@@ -49,4 +50,35 @@ class Question extends Model
     public function answers(){
         return $this->hasMany(Answer::class);
     }
+
+    /* NOTE: #WHERE - We define the accepting functionality in QUESTION class, because it is a QUESTION related action */
+
+    public function acceptAnswer(Answer $answer)
+    {
+        $this->accepted_answer_id = $answer->id;
+        $this->save();
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(User::class, 'favorites')->withTimestamps(); //, 'question_id', 'user_id');
+    }
+
+    public function isFavorited()
+    {
+        return $this->favorites()->where('user_id', auth()->id())->count() > 0;
+    }
+
+    public function getIsFavoritedAttribute()
+    {
+        return $this->isFavorited();
+    }
+
+    public function getFavoritesCountAttribute()
+    {
+        return $this->favorites->count();
+    }
+
+
+
 }

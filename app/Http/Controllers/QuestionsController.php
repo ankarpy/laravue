@@ -145,4 +145,21 @@ class QuestionsController extends Controller
 
         return redirect('/questions')->with('success', "Your question has been deleted.");
     }
+
+    /**
+     * Vote the question
+     *
+     * @param  \App\Models\Answer  $answer
+     * @return \Illuminate\Http\Response
+     */
+    public function voteQuestion(Question $question) {
+        $this->authorize('vote', $question);
+
+        $user = request()->user();
+
+        $vote = (int) request()->vote;
+        $user->voteQuestion($question, $vote);
+
+        return back();
+    }
 }

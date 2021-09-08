@@ -21,7 +21,7 @@ class CreateQuestionsTable extends Migration
             $table->text('body');
             $table->unsignedInteger('views')->default(0); // Burned in for performance
             $table->unsignedInteger('answers')->default(0); // Burned in for performance
-            $table->integer('votes')->default(0); // Burned in for performance
+            $table->integer('vote_count')->default(0); // Burned in for performance
             $table->unsignedBigInteger('accepted_answer_id')->nullable();
             $table->timestamps();
 

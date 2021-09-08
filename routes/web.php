@@ -26,3 +26,10 @@ Route::resource('questions', App\Http\Controllers\QuestionsController::class)->e
 Route::resource('questions.answers', App\Http\Controllers\AnswersController::class)->only(['store', 'edit', 'update', 'destroy']);
 Route::get('/questions/{slug}', [App\Http\Controllers\QuestionsController::class, 'show'])->name('questions.show');
 
+Route::post('/questions/{question}/answers/{answer}/accept', [App\Http\Controllers\AnswersController::class, 'acceptAnswer'])->name('questions.answers.accept');
+
+Route::post('/questions/{question}/favorites', [App\Http\Controllers\FavoritesController::class, 'store'])->name('questions.favorite');
+Route::delete('/questions/{question}/favorites', [App\Http\Controllers\FavoritesController::class, 'destroy'])->name('questions.unfavorite');
+
+Route::post('/questions/{question}/vote', [App\Http\Controllers\QuestionsController::class, 'voteQuestion']);
+Route::post('/answers/{answer}/vote', [App\Http\Controllers\AnswersController::class, 'voteAnswer']);

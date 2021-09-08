@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Question;
+use App\Models\Answer;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class QuestionPolicy
+class AnswerPolicy
 {
     use HandlesAuthorization;
 
@@ -25,12 +25,12 @@ class QuestionPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Question  $question
+     * @param  \App\Models\Answer  $answer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Question $question)
+    public function view(User $user, Answer $answer)
     {
-        return true;
+        //
     }
 
     /**
@@ -48,34 +48,34 @@ class QuestionPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Question  $question
+     * @param  \App\Models\Answer  $answer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Question $question)
+    public function update(User $user, Answer $answer)
     {
-        return $user->id === $question->user_id;
+        return $user->id === $answer->user_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Question  $question
+     * @param  \App\Models\Answer  $answer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Question $question)
+    public function delete(User $user, Answer $answer)
     {
-        return $user->id === $question->user_id && $question->answer_count < 1;
+        return $user->id === $answer->user_id;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Question  $question
+     * @param  \App\Models\Answer  $answer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Question $question)
+    public function restore(User $user, Answer $answer)
     {
         //
     }
@@ -84,17 +84,22 @@ class QuestionPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Question  $question
+     * @param  \App\Models\Answer  $answer
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Question $question)
+    public function forceDelete(User $user, Answer $answer)
     {
         //
     }
 
+    public function accept(User $user, Answer $answer)
+    {
+        return $user->id === $answer->question->user_id;
+    }
 
-    public function vote(User $user)
+    public function vote(User $user, Answer $answer)
     {
         return isset($user);
     }
+
 }
