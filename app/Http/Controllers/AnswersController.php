@@ -84,7 +84,7 @@ class AnswersController extends Controller
      * @param  \App\Models\Answer  $answer
      * @return \Illuminate\Http\Response
      */
-    public function acceptAnswer(Question $question, Answer $answer) {
+    public function acceptAnswer(Answer $answer) {
         $this->authorize('accept', $answer);
 
         $answer->question->acceptAnswer($answer);
