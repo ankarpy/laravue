@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use App\Models\Question;
+use App\Models\Answer;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -49,7 +50,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
 
             Route::bind('slug', function($slug) {
-                return Question::where('slug', $slug)->first() ?? abort(404);
+                return Question::with(['user', 'answers.user'])->where('slug', $slug)->first() ?? abort(404);
             });
         });
     }

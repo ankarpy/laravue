@@ -10,7 +10,21 @@ class Answer extends Model
 {
     use HasFactory, VotableTrait;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['body', 'user_id'];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'created_date',
+    ];
 
     public function question(){
         return $this->belongsTo(Question::class);
