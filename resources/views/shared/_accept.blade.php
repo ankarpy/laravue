@@ -9,7 +9,7 @@
         @csrf
     </form>
 @else
-    @if ($model->is_best)
+    @if ($model->is_accepted)
         <a title="The question owner accepted this answer as best answer"
            class="{{ $model->status }} mt-2"
         >

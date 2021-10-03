@@ -103,6 +103,12 @@ class AnswersController extends Controller
 
         $answer->question->acceptAnswer($answer);
 
+        if (request()->expectsJson()) {
+            return response()->json([
+                'message' => "You have accepted this answer as best answer"
+            ]);
+        }
+
         return back();
     }
 
@@ -119,7 +125,15 @@ class AnswersController extends Controller
         $user = request()->user();
 
         $vote = (int) request()->vote;
-        $user->voteAnswer($answer, $vote);
+
+        $votesCount = $user->voteAnswer($answer, $vote);
+
+        if (request()->expectsJson()) {
+            return response()->json([
+                'message' => 'Thanks for the feedback',
+                'votesCount' => $votesCount
+            ]);
+        }
 
         return back();
     }

@@ -22,9 +22,7 @@ class Answer extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'created_date', 'body_html',
-    ];
+    protected $appends = ['created_date', 'body_html', 'is_accepted'];
 
     public function question(){
         return $this->belongsTo(Question::class);

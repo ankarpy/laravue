@@ -24,9 +24,7 @@ class Question extends Model
      *
      * @var array
      */
-    protected $appends = [
-        'created_date',
-    ];
+    protected $appends = ['created_date', 'is_favorited', 'favorite_count'];
 
     public function user() {
       return $this->belongsTo(User::class);
