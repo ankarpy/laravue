@@ -23,7 +23,7 @@ class Answer extends Model
      * @var array
      */
     protected $appends = [
-        'created_date',
+        'created_date', 'body_html',
     ];
 
     public function question(){

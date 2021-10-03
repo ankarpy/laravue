@@ -10002,6 +10002,10 @@ h3 {
     border-color: #dee2e6;
   }
 }
+[v-cloak] {
+  display: none;
+}
+
 .question {
   padding: 20px 10px;
   border-bottom: 1px solid lightgrey;
