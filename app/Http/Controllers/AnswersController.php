@@ -134,6 +134,8 @@ class AnswersController extends Controller
     public function voteAnswer(Question $question, Answer $answer) {
         $this->authorize('vote', $answer);
 
+
+
         $user = request()->user();
 
         $vote = (int) request()->vote;

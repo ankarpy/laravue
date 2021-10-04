@@ -17,4 +17,10 @@ trait VotableTrait
     {
         return $this->votes()->wherePivot('vote', -1);
     }
+
+    public function userVotes()
+    {
+
+        return $this->votes()->wherePivot('user_id', \Auth::id());
+    }
 }

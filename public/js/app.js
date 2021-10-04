@@ -11784,10 +11784,16 @@ __webpack_require__.r(__webpack_exports__);
   props: ['name', 'model'],
   computed: {
     classes: function classes() {
-      return this.signedIn ? '' : 'off';
+      return [this.signedIn ? '' : 'off', 'hello'];
     },
     endpoint: function endpoint() {
       return "/".concat(this.name, "s/").concat(this.id, "/vote");
+    },
+    isVotedDown: function isVotedDown() {
+      return this.voted === -1;
+    },
+    isVotedUp: function isVotedUp() {
+      return this.voted === 1;
     }
   },
   components: {
@@ -11797,7 +11803,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       count: this.model.vote_count,
-      id: this.model.id
+      id: this.model.id,
+      voted: this.model.voted
     };
   },
   methods: {
@@ -11834,6 +11841,7 @@ __webpack_require__.r(__webpack_exports__);
         });
 
         _this.count = res.data.votesCount;
+        _this.voted = vote;
       });
     }
   }
@@ -48653,7 +48661,7 @@ var render = function() {
         "a",
         {
           staticClass: "vote-up",
-          class: _vm.classes,
+          class: [_vm.classes, { voted: _vm.isVotedUp }],
           attrs: { title: _vm.title("up") },
           on: {
             click: function($event) {
@@ -48671,7 +48679,7 @@ var render = function() {
         "a",
         {
           staticClass: "vote-down",
-          class: _vm.classes,
+          class: [_vm.classes, { voted: _vm.isVotedDown }],
           attrs: { title: _vm.title("down") },
           on: {
             click: function($event) {

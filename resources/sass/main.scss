@@ -77,6 +77,10 @@ html {
         display: block;
     }
 
+    .vote-up.voted path, .vote-down.voted path {
+        fill: coral;
+    }
+
     span {
         &.votes-count {
             font-size:25px;
@@ -96,7 +100,7 @@ html {
 
         &.favorite {
             &.favorited, &.favorited:hover {
-                color: $warning;
+                color: coral;
             }
         }
 

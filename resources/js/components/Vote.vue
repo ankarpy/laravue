@@ -1,14 +1,14 @@
 <template>
     <div class="d-fex flex-column vote-controls">
         <a @click.prevent="voteUp" :title="title('up')"
-           class="vote-up" :class="classes">
+           class="vote-up" :class="[classes, { 'voted': isVotedUp }]">
             <i class="fas fa-caret-up fa-3x"></i>
         </a>
 
         <span class="votes-count">{{ count }}</span>
 
         <a @click.prevent="voteDown" :title="title('down')"
-           class="vote-down" :class="classes">
+           class="vote-down" :class="[classes, { 'voted': isVotedDown }]">
             <i class="fas fa-caret-down fa-3x"></i>
         </a>
 
@@ -27,11 +27,18 @@ export default {
 
     computed: {
         classes () {
-            return this.signedIn ? '' : 'off';
+            return [this.signedIn ? '' : 'off', 'hello'];
         },
 
         endpoint () {
             return `/${this.name}s/${this.id}/vote`;
+        },
+
+        isVotedDown() {
+            return this.voted === -1;
+        },
+        isVotedUp() {
+            return this.voted === 1;
         }
     },
 
@@ -43,7 +50,9 @@ export default {
     data () {
         return {
             count: this.model.vote_count,
-            id: this.model.id
+            id: this.model.id,
+            voted: this.model.voted,
+
         }
     },
 
@@ -82,6 +91,7 @@ export default {
                     });
 
                     this.count = res.data.votesCount;
+                    this.voted = vote;
                 })
         }
     }

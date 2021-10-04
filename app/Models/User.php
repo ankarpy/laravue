@@ -82,10 +82,26 @@ class User extends Authenticatable
         return $this->morphedByMany(Question::class, 'votable');
     }
 
+    public function questionUserVote(Question $question)
+    {
+        $voteQuestions = $this->voteQuestions();
+
+        return $this->_getUserVote($voteQuestions, $question);
+    }
+
     public function voteAnswers()
     {
         return $this->morphedByMany(Answer::class, 'votable');
     }
+
+    public function answerUserVote(Answer $answer)
+    {
+        $voteAnswers = $this->voteAnswers();
+
+        return $this->_getUserVote($voteAnswers, $answer);
+    }
+
+
 
     /* NOTE: #WHERE - We define the voting functionality in USER class, because it is an user related action */
     /* $user->vote($post, 1); */
@@ -121,6 +137,19 @@ class User extends Authenticatable
         $model->save();
 
         return $model->vote_count;
+    }
+
+    private function _getUserVote($relationship, $model)
+    {
+        if ($relationship->where('votable_id', $model->id)->exists()) {
+            $model->load('votes');
+            $userVote = (int) $model->userVotes()->sum('vote');
+
+            return $userVote;
+
+        }
+
+        return 0;
     }
 
 }

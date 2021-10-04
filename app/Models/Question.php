@@ -24,7 +24,7 @@ class Question extends Model
      *
      * @var array
      */
-    protected $appends = ['created_date', 'is_favorited', 'favorite_count'];
+    protected $appends = ['created_date', 'is_favorited', 'favorite_count', 'voted'];
 
     public function user() {
       return $this->belongsTo(User::class);
@@ -105,6 +105,18 @@ class Question extends Model
     private function bodyHtml()
     {
         return \Parsedown::instance()->text($this->body);
+    }
+
+    public function getVotedAttribute()
+    {
+
+        $vote = NULL;
+        if ($user = \Auth::user()){
+            $vote = $user->questionUserVote($this);
+
+        }
+
+        return $vote !== NULL ? $vote : 0;
     }
 
 
