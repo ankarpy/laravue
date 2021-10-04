@@ -17,6 +17,8 @@ class Answer extends Model
      */
     protected $fillable = ['body', 'user_id'];
 
+    protected $with = ['question'];
+
     /**
      * The accessors to append to the model's array form.
      *

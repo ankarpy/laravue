@@ -36,7 +36,8 @@
                 </div>
             </div>
         </div>
-        @include('answers._index', ['answers' => $question->answers()->with('user')->get(), 'answersCount' => $question->answers_count])
+
+        <answers :question="{{ $question }}"></answers>
         @can('create', \App\Models\Answer::class)
             @include('answers._create')
         @endcan

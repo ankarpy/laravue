@@ -1,4 +1,4 @@
-<answer :answer="{{ $answer }}" inline-template>
+<?php /* <answer :answer="{{ $answer }}" inline-template>
 <div class="media post">
     <vote :model="{{ $answer }}" name="answer"></vote>
     <div class="media-body">
@@ -39,3 +39,5 @@
 </div>
 
 </answer>
+
+*/ ?>

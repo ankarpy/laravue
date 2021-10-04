@@ -50,7 +50,7 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/web.php'));
 
             Route::bind('slug', function($slug) {
-                return Question::with(['user', 'answers.user'])->where('slug', $slug)->first() ?? abort(404);
+                return Question::with('user')->where('slug', $slug)->first() ?? abort(404);
             });
         });
     }
